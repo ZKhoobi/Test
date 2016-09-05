@@ -20,6 +20,14 @@ public class User {
         this.pass = pass;
     }
 
+    public User(String name, String pass) {
+        this.name = name;
+        this.pass = pass;
+    }
+
+    public User() {
+    }
+
     String name;
     String pass;
 

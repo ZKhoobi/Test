@@ -6,23 +6,34 @@ import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(value = "/user/*")
+import java.util.List;
+
+@RequestMapping(value = "/users")
 @RestController
 public class UserBusiness {
 
-    @RequestMapping(value = "{UserId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{UserId}",method = RequestMethod.GET)
     public User getUser(@PathVariable("UserId") int id){
-        User user=null;
-        return user;
+        User user1 = new User();
+        if(id==1) {
+            user1.setName("khoobi");
+            user1.setPass("1234");
+
+        }
+        else{
+            user1.setName("12121");
+            user1.setPass("2323");
+        }
+        return user1;
     }
 
-    @RequestMapping(value = "{UserId}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{UserId}",method = RequestMethod.DELETE)
     public User deleteUser(@PathVariable("UserId") int id){
         User user=null;
         return user;
     }
 
-    @RequestMapping(value = "{UserId}",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{UserId}",method = RequestMethod.PUT)
     public void updateUser(@RequestBody User newUser,@PathVariable("UserId") int id){
         User user=null;
     }
@@ -33,6 +44,14 @@ public class UserBusiness {
         int id=0;
         return id;
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<User> getAllUser(@RequestParam("from") int from,@RequestParam("to") int to){
+
+        List<User> userList=null;
+        return userList;
+    }
+
     //change status here
 //    @ResponseStatus(HttpStatus.NOT_FOUND)
 //    @RequestMapping(value = "/user/{UserId}", method = RequestMethod.POST)
