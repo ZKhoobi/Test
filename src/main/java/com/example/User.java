@@ -1,9 +1,21 @@
 package com.example;
 
+import javax.persistence.*;
+
 /**
- * Created by z.khoobi on 05/09/2016.
+ * Created by z.khoobi on 12/09/2016.
  */
+@Entity
+@Table(name="\"User\"")
 public class User {
+    public User(String name, String pass) {
+        this.name = name;
+        this.pass = pass;
+    }
+
+    public User(){}
+    String name;
+
     public String getName() {
         return name;
     }
@@ -20,15 +32,16 @@ public class User {
         this.pass = pass;
     }
 
-    public User(String name, String pass) {
-        this.name = name;
-        this.pass = pass;
+    public int getId() {
+        return id;
     }
 
-    public User() {
+    public void setId(int id) {
+        this.id = id;
     }
 
-    String name;
     String pass;
-
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    int id;
 }

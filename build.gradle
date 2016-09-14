@@ -7,27 +7,32 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//		classpath("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-	baseName = 'test2'
+	baseName = 'test4'
 	version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-repositories {
-	mavenCentral()
-}
+//repositories {
+//	mavenCentral()
+//}
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	runtime('org.postgresql:postgresql')
+	compile("com.h2database:h2")
+//	testCompile("junit:junit")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
