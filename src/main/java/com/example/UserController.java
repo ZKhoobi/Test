@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by z.khoobi on 12/09/2016.
@@ -15,25 +18,27 @@ public class UserController {
 
     @Autowired(required = true)
     UserDAO ud;
+    @Autowired(required = true)
+    CountryDAO cd;
+    @Autowired(required = true)
+    RoleDAO rd;
 
     @RequestMapping(value = "/{UserId}",method = RequestMethod.GET)
-    public User getUser(@PathVariable("UserId") int id){
+    public UserDTO getUser(@PathVariable("UserId") int id){
         User user1 = ud.findOne(id);
-        return user1;
+        return new UserDTO(user1);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public int insertUser(@RequestBody User newUser){
-        ud.save(newUser);
-        int id=ud.findByName(newUser.name).getId();
-        return id;
+    public int insertUser(@RequestBody UserDTO dtoUser){
+        return ud.save(getUser(dtoUser)).getId();
     }
 
     @RequestMapping(value = "/{UserId}",method = RequestMethod.PUT)
-    public int updateUser(@RequestBody User newUser,@PathVariable("UserId") int id){
+    public int updateUser(@RequestBody UserDTO dtoUser,@PathVariable("UserId") int id){
+        User newUser=getUser(dtoUser);
         newUser.setId(id);
-        ud.save(newUser);
-        return id;
+        return ud.save(newUser).getId();
     }
 
     @RequestMapping(value = "/{UserId}",method = RequestMethod.DELETE)
@@ -42,7 +47,36 @@ public class UserController {
     }
 
     @RequestMapping(value = "")
-    public List<User> getAllUsers(){
-        return (List<User>) ud.findAll();
+    public List<UserDTO> getAllUsers(){
+        List<User> userList=(List<User>) ud.findAll();
+        List<UserDTO> dtoList=new ArrayList<>();
+        for (User u: userList
+             ) {
+            dtoList.add(new UserDTO(u));
+        }
+        return dtoList;
+    }
+
+    private User getUser(UserDTO dto)
+    {
+        User u=new User();
+        u.setName(dto.getName());
+        u.setPass(dto.getPass());
+        Set<Role> roleSet=new HashSet<>();
+        for (String s:dto.getRoles()
+                ) {
+            Role r=rd.getByName(s);
+            if(r==null){
+                r=new Role(s);
+            }
+            roleSet.add(r);
+        }
+        u.setRoleSet(roleSet);
+        Country c=cd.getByName(dto.getCountry());
+        if(c==null){
+            c=new Country(dto.getCountry());
+        }
+        u.setCountry(c);
+        return u;
     }
 }

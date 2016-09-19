@@ -1,0 +1,55 @@
+#spring:
+#    profiles:
+#        active: dev
+#    datasource:
+#            dataSourceClassName: org.h2.jdbcx.JdbcDataSource
+#            url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+#            databaseName:
+#            serverName:
+#            username:
+#            password:
+#    jpa:
+#        database-platform: org.hibernate.dialect.H2Dialect
+#        database: H2
+#        openInView: false
+#        show_sql: true
+#        generate-ddl: true
+#        hibernate:
+#            ddl-auto: create-drop
+#            naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+#        properties:
+#            hibernate.cache.use_query_cache: false
+#            hibernate.generate_statistics: true
+##################################################################################
+spring:
+  profiles:
+    active: local
+  datasource:
+    database-platform: postgres
+    databaseName: POSTGRESQL
+    url: jdbc:postgresql://localhost:5432/DBUser
+    username: postgres
+    password: 123
+    driverClassName: org.postgresql.Driver
+    show_sql: true
+    generate-ddl: true
+    hibernate:
+        ddl-auto: create-update
+
+---
+spring:
+  test:
+    datasource:
+      driverClassName: org.h2.Driver
+      url: jdbc:h2:mem:test;MODE=PostgreSQL
+      schema: classpath:/schema.sql
+      database-platform: org.hibernate.dialect.H2Dialect
+      databaseName: H2
+      username:
+      password:
+      show_sql: true
+      generate-ddl: true
+      hibernate:
+        ddl-auto: create-update
+
+
