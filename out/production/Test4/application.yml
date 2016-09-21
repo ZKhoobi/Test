@@ -32,9 +32,10 @@ spring:
     password: 123
     driverClassName: org.postgresql.Driver
     show_sql: true
+  jpa:
     generate-ddl: true
     hibernate:
-        ddl-auto: create-update
+      ddl-auto: create-update
 
 ---
 spring:

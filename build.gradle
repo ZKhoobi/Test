@@ -11,7 +11,7 @@ buildscript {
 	}
 }
 
-apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
@@ -23,9 +23,9 @@ jar {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-//repositories {
-//	mavenCentral()
-//}
+repositories {
+	mavenCentral()
+}
 
 
 dependencies {
@@ -33,6 +33,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('org.postgresql:postgresql')
 	compile("com.h2database:h2")
+	compile('org.codehaus.groovy:groovy-all:2.4.7')
 //	testCompile("junit:junit")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
